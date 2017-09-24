@@ -5,16 +5,16 @@ module SentenceStats
     , shortestSentence
     ) where
 
-import Data.Char
-import Data.List
-import Data.Ord
-import Data.List.Split
+import qualified Data.Char as DC
+import qualified Data.List as DL
+import qualified Data.Ord as DO
+import qualified Data.List.Split as DLS
 
 sentenceCount :: String -> Int
 sentenceCount = length . sentences
 
 sentences :: String -> [String]
-sentences = map trim . filter (\x -> x /= "") . split (keepDelimsR $ oneOf "?!.")
+sentences = map trim . filter (\x -> x /= "") . DLS.split (DLS.keepDelimsR $ DLS.oneOf "?!.")
 
 trim :: String -> String
 trim = reverse . trimLeft . reverse . trimLeft
@@ -22,7 +22,7 @@ trim = reverse . trimLeft . reverse . trimLeft
 trimLeft :: String -> String
 trimLeft "" = ""
 trimLeft w@(x:xs)
-    | isSpace x = trimLeft xs
+    | DC.isSpace x = trimLeft xs
     | otherwise = w
 
 averageSentenceLength :: String -> Int
@@ -35,7 +35,7 @@ findMeanSentenceLength l c (x:xs) = findMeanSentenceLength newL newC xs
           newC = succ c
 
 longestSentence :: String -> String
-longestSentence = maximumBy (comparing length) . sentences
+longestSentence = DL.maximumBy (DO.comparing length) . sentences
 
 shortestSentence :: String -> String
-shortestSentence = minimumBy (comparing length) . sentences
+shortestSentence = DL.minimumBy (DO.comparing length) . sentences
