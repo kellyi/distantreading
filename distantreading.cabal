@@ -16,12 +16,17 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Lib
+                     , WordStats
+                     , SentenceStats
+                     , StopWords
+                     , Util
   build-depends:       base >= 4.7 && < 5
                      , split
                      , wreq
                      , lens
                      , bytestring
                      , text
+                     , optparse-applicative
   default-language:    Haskell2010
 
 executable distantreading-exe
@@ -33,8 +38,9 @@ executable distantreading-exe
                      , wreq
                      , lens
                      , bytestring
-                     , distantreading
                      , text
+                     , optparse-applicative
+                     , distantreading
   default-language:    Haskell2010
 
 test-suite distantreading-test
