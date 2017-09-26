@@ -8,13 +8,19 @@ import Data.Semigroup ((<>))
 import Data.Monoid (mconcat)
 import qualified Web.Scotty as SC
 
-import Lib
+import qualified Lib as Lib
 
-data Opt = Opt { server :: Bool }
+data Opt = Opt
+    { target :: String
+    , server :: Bool }
 
 optarg :: Parser Opt
 optarg = Opt
-      <$> switch
+      <$> strOption
+           ( long "target"
+          <> metavar "TARGET"
+          <> help "Target file" )
+      <*> switch
           ( long "server"
          <> short 's'
          <> help "Run server instead of command line interface" )
@@ -28,7 +34,8 @@ main = parse =<< execParser opts
      <> header "distantreading" )
 
 parse :: Opt -> IO ()
-parse (Opt True) = SC.scotty 3000 router
+parse (Opt _ True) = SC.scotty 3000 router
+parse (Opt f False) = Lib.fileStats f
 parse _ = putStrLn $ "Placeholder for running command line interface!"
 
 router :: SC.ScottyM ()

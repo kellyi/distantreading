@@ -18,6 +18,7 @@ library
                      , SentenceStats
                      , StopWords
                      , Util
+                     , Response
   build-depends:       base >= 4.7 && < 5
                      , split
                      , wreq
@@ -26,6 +27,7 @@ library
                      , text
                      , optparse-applicative
                      , scotty
+                     , aeson
   default-language:    Haskell2010
 
 executable distantreading
@@ -40,6 +42,7 @@ executable distantreading
                      , text
                      , optparse-applicative
                      , scotty
+                     , aeson
                      , distantreading
   default-language:    Haskell2010
 
