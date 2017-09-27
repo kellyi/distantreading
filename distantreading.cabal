@@ -32,7 +32,7 @@ library
 
 executable distantreading
   hs-source-dirs:      app
-  main-is:             Main.hs
+  main-is:             CLI.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
                      , split
@@ -41,6 +41,20 @@ executable distantreading
                      , bytestring
                      , text
                      , optparse-applicative
+                     , aeson
+                     , distantreading
+  default-language:    Haskell2010
+
+executable distantreading-server
+  hs-source-dirs:      app
+  main-is:             Server.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , split
+                     , wreq
+                     , lens
+                     , bytestring
+                     , text
                      , scotty
                      , aeson
                      , distantreading
