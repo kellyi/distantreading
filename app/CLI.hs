@@ -8,7 +8,9 @@ import Data.Semigroup ((<>))
 
 import qualified Lib as Lib
 
-data Opt = Opt { target :: String }
+data Opt = Opt
+    { target :: String
+    , sentence :: Bool }
 
 optarg :: Parser Opt
 optarg = Opt
@@ -16,6 +18,10 @@ optarg = Opt
            ( long "target"
           <> metavar "TARGET"
           <> help "Target file" )
+      <*> switch
+           ( long "sentence"
+          <> short 's'
+          <> help "Parse sentences" )
 
 main :: IO ()
 main = parse =<< execParser opts
@@ -26,4 +32,5 @@ main = parse =<< execParser opts
      <> header "distantreading" )
 
 parse :: Opt -> IO ()
-parse (Opt file) = Lib.fileStats file
+parse (Opt file False) = Lib.wordStatsFromFile file
+parse (Opt file True) = Lib.sentenceStatsFromFile file

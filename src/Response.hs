@@ -1,7 +1,12 @@
 {-# LANGUAGE OverloadedStrings, DeriveGeneric #-}
 
 module Response
-    ( createResponse
+    ( createWordResponseForUrls
+    , createWordResponseForFile
+    , createSentenceResponseForUrls
+    , createSentenceResponseForFile
+    , SentenceResponse
+    , WordResponse
     ) where
 
 import GHC.Generics
@@ -14,30 +19,40 @@ import qualified SentenceStats as Sentences
 import qualified StopWords as StopWords
 import qualified Util as Util
 
-data Res = Res
-    { sentenceCount :: Int
-    , averageSentenceLength :: Int
-    , longestSentence :: String
-    , shortestSentence :: String
-    , totalCharCount :: Int
-    , spacelessCharCount :: Int
-    , totalWordCount :: Int
+data WordResponse = WordResponse
+    { totalWordCount :: Int
     , uniqueWordCount :: Int
     , wordCounts :: [(String, Int)]
     } deriving (Generic, Show)
 
-instance ToJSON Res
-instance FromJSON Res
+instance ToJSON WordResponse
+instance FromJSON WordResponse
 
-createResponse :: String -> IO ()
-createResponse s = T.putStrLn . T.decodeUtf8 . encode $ resp
-    where resp = (Res count average long short char spaceless word unique wc)
-          count = Sentences.sentenceCount s
-          average = Sentences.averageSentenceLength s
-          long = Sentences.longestSentence s
-          short = Sentences.shortestSentence s
-          char = Words.totalCharCount s
-          spaceless = Words.spacelessCharCount s
-          word = Words.totalWordCount s
+data SentenceResponse = SentenceResponse
+    { sentenceCount :: Int
+    , averageSentenceLength :: Int
+    , longestSentence :: String
+    } deriving (Generic, Show)
+
+instance ToJSON SentenceResponse
+instance FromJSON SentenceResponse
+
+createWordResponseForUrls :: [String] -> IO ()
+createWordResponseForUrls urls = undefined
+
+createSentenceResponseForUrls :: [String] -> IO ()
+createSentenceResponseForUrls urls = undefined
+
+createWordResponseForFile :: String -> IO ()
+createWordResponseForFile s = T.putStrLn . T.decodeUtf8 .encode $ resp
+    where resp = (WordResponse total unique wc)
+          total = Words.totalWordCount s
           unique = Words.uniqueWordCount s
           wc = Words.wordCounts s
+
+createSentenceResponseForFile :: String -> IO ()
+createSentenceResponseForFile s = T.putStrLn . T.decodeUtf8 . encode $ resp
+    where resp = (SentenceResponse count average longest)
+          count = Sentences.sentenceCount s
+          average = Sentences.averageSentenceLength s
+          longest = Sentences.longestSentence s

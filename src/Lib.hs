@@ -1,5 +1,6 @@
 module Lib
-    ( fileStats
+    ( wordStatsFromFile
+    , sentenceStatsFromFile
     ) where
 
 import Data.List
@@ -10,7 +11,12 @@ import qualified StopWords as StopWords
 import qualified Util as Util
 import qualified Response as Response
 
-fileStats :: FilePath -> IO ()
-fileStats f = do
+wordStatsFromFile :: FilePath -> IO ()
+wordStatsFromFile f = do
     r <- readFile f
-    Response.createResponse r
+    Response.createWordResponseForFile r
+
+sentenceStatsFromFile :: FilePath -> IO ()
+sentenceStatsFromFile f = do
+    r <- readFile f
+    Response.createSentenceResponseForFile r
