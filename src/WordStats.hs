@@ -7,6 +7,7 @@ module WordStats
     ) where
 
 import qualified Data.Char as DC
+import qualified Data.List as DL
 import qualified Util as DRUtil
 
 totalCharCount :: String -> Int
@@ -22,8 +23,8 @@ wordCounts :: String -> [(String, Int)]
 wordCounts = wc . DRUtil.toWords
 
 uniqueWordCount :: String -> Int
-uniqueWordCount = length . DRUtil.toWords
+uniqueWordCount = length . DRUtil.toUniqueWords
 
 wc :: [String] -> [(String, Int)]
-wc l = map counts l
+wc l = map counts $ DL.nub l
     where counts y = (y, length $ filter (\x -> x == y) l)

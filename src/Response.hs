@@ -48,7 +48,7 @@ createWordResponseForFile s = T.putStrLn . T.decodeUtf8 .encode $ resp
     where resp = (WordResponse total unique wc)
           total = Words.totalWordCount s
           unique = Words.uniqueWordCount s
-          wc = Words.wordCounts s
+          wc = Words.wordCounts $ s
 
 createSentenceResponseForFile :: String -> IO ()
 createSentenceResponseForFile s = T.putStrLn . T.decodeUtf8 . encode $ resp
