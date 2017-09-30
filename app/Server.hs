@@ -13,8 +13,10 @@ main = do SC.scotty 4444 router
 
 router :: SC.ScottyM ()
 router = do
-  SC.post "/run" $ do
+  SC.post "/words" $ do
     req <- SC.jsonData :: SC.ActionM Request.Req
     SC.json $ req
-  SC.get "/" $ SC.text $ mconcat ["Helo world!"]
-  SC.notFound $ SC.text $ mconcat ["that endpoint is not yet implemented"]
+  SC.post "/sentences" $ do
+    req <- SC.jsonData :: SC.ActionM Request.Req
+    SC.json $ req
+  SC.notFound $ SC.text $ mconcat ["distant reading"]

@@ -8,8 +8,7 @@ import GHC.Generics
 import Data.Aeson
 
 data Req = Req
-    { operation :: String
-    , urls :: [String]
+    { url :: String
     } deriving (Show, Generic)
 
 instance ToJSON Req
