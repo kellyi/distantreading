@@ -14,7 +14,8 @@ import qualified Response as Response
 wordStatsFromFile :: FilePath -> IO ()
 wordStatsFromFile f = do
     r <- readFile f
-    Response.createWordResponseForFile r
+    s <- StopWords.removeStopWords r
+    Response.createWordResponseForFile r s
 
 sentenceStatsFromFile :: FilePath -> IO ()
 sentenceStatsFromFile f = do

@@ -19,12 +19,9 @@ spacelessCharCount = length . filter (\x -> not $ DC.isSpace x)
 totalWordCount :: String -> Int
 totalWordCount = length . words
 
-wordCounts :: String -> [(String, Int)]
-wordCounts = wc . DRUtil.toWords
-
 uniqueWordCount :: String -> Int
 uniqueWordCount = length . DRUtil.toUniqueWords
 
-wc :: [String] -> [(String, Int)]
-wc l = map counts $ DL.nub l
+wordCounts :: [String] -> [(String, Int)]
+wordCounts l = map counts $ DL.nub l
     where counts y = (y, length $ filter (\x -> x == y) l)
