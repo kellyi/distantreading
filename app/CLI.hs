@@ -21,7 +21,7 @@ optarg = Opt
       <*> switch
            ( long "sentence"
           <> short 's'
-          <> help "Parse sentences" )
+          <> help "Get sentence stats instead of word stats" )
 
 main :: IO ()
 main = parse =<< execParser opts
